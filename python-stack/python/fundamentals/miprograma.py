@@ -86,4 +86,4 @@ menu = {'lunes' : 'pasta' ,
 #for k in menu.values():
 #    print(k)        
 
-print(menu['jueves'][0])
+#print(menu['jueves'][0])
