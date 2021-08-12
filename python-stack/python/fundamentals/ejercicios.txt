@@ -1,0 +1,28 @@
+ ################################
+ # Imprimir una Matriz de N x M #
+ ################################
+
+ Definir 2 parametros : N y M, Imprimir una Matriz de N filas y M columnas
+ Ejemplo:
+    N = 5
+    M = 6
+  resultado:
+        ******
+        ******
+        ******
+        ******
+        ******
+
+
+#########################################
+# Cantidad de Numero Primos entre N y M #
+#########################################
+
+Dados N y M. imprimir la cantidad de numeros primos que hay en el 
+rango determinado
+
+Ejemplo: n = 1, m =20
+
+El programa debera imprimir:
+
+Entre 1 y 20 hay 8 numeros primos

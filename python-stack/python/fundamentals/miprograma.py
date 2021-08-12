@@ -16,10 +16,15 @@ mayoria_edad = 18
 
 def mayor_de_edad(edad):
     if (edad >= mayoria_edad):
-        return("eres mayor de edad")
+        #print ("eres mayor de edad")
+        mostrar_carta_alcohol()
+    elif (edad == 10):
+        #return saludo("", 1)
+        mostrar_carta_sodas()
     else:
         annios_faltantes = mayoria_edad - edad
-        return("te faltan : {} annios para ser mayor de edad".format(annios_faltantes)) 
+        #return ("te faltan : {} annios para ser mayor de edad".format(annios_faltantes)) 
+        mostrar_carta_comida()
 
 
 def saludo(nombre,edad):
