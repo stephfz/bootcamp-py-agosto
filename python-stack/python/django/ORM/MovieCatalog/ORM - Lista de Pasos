@@ -1,0 +1,31 @@
+1 . Crear la BD (es postgres)
+    - conectarse a postgres en la terminal > psql postgres
+    - CREATE DATABASE nombre_de_mibd;
+    - \l
+    - \q
+
+2. Agregar la configuracion de BD a setting.py
+        DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql', # cambiar la base de datos a postgres
+            'NAME': 'movieapp', # nombre de la base de datos, se creará en el servidor de Postgres a continuación
+            'USER': 'miuser', # postgres para macOS o 'USER': 'postgres', para Windows
+            'PASSWORD': 'mipwd', # contraseña a la que la cambió al instalar Postgres
+            'HOST': '127.0.0.1', # dirección IP localhost
+            'PORT': '5432', # puerto del servidor postgres predeterminado
+        }
+    }
+
+3. En mi Applicacion (apps.myapp -> models.py)
+    - Crear Modelo
+        class User(models.Model)
+
+4. Terminal de Django
+    - python manage.py makemigrations
+    - python manage.py migrate
+    ----mi model (User) -> crear un tabla my_app.user
+    
+
+
+
+
