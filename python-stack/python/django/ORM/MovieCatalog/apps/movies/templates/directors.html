@@ -1,0 +1,20 @@
+<h3> Registrar Director</h3>
+
+
+<form action = '/director' method = "POST">
+    {% csrf_token %}
+    <p>Nombre:  <input name="first_name" type="text"> </p>
+    <p>Apellido:  <input name="last_name" type="text">   </p>
+    <p>Nacionalidad:  <input name="nationality" type="text">   </p>
+<button type='submit'>Registrar</button>
+</form>
+
+<h3>Todos los directores</h3>
+
+<ul>
+{% for director in directors%}
+    <li>{{director.last_name}} , {{director.first_name}}</li>
+{% endfor %}
+    
+
+</ul>

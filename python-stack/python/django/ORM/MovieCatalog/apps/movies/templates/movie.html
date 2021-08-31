@@ -1,0 +1,11 @@
+<h1>Nueva Pelicula</h1>
+
+<form action = '/register_movie' method = "POST">
+    {% csrf_token %}
+    <p>Titulo:  <input name="title" type="text"> </p>
+    <p>Descripcion:  <input name="description" type="text">   </p>
+    <p>Fecha de Estreno:  <input name="release_date" type="date">   </p>
+    <p>Duracion:  <input name="duration" type="text">   </p>
+    <p>Director:  <input name="director_id" type="text">   </p>
+<button type='submit'>Registrar</button>
+</form>

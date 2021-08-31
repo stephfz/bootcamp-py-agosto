@@ -1,0 +1,11 @@
+<h1>Director: {{director.first_name}}</h1>
+
+
+
+<ul>
+{%for movie in director.movies.all %}
+
+<li> {{movie.title}} </li>
+{%endfor%}
+
+</ul>

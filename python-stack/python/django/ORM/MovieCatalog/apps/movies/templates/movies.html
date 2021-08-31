@@ -1,0 +1,10 @@
+<h1>Listado de Peliculas</h1>
+
+
+<ul>
+{% for movie in movies %}
+
+<li>{{movie.title}}, Dirigido por: {{movie.director.first_name}}</li>
+
+{% endfor%}
+</ul>
