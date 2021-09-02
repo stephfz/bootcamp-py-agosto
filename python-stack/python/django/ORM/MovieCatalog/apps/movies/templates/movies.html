@@ -1,10 +1,36 @@
+<h1>Registro de Pelicula</h1>
+
+<form action = '/movies' method = "POST">
+    {% csrf_token %}
+    <p>Titulo:  <input name="title" type="text"> </p>
+    <p>Descripcion:  <input name="description" type="text">   </p>
+    <p>Fecha de Estreno:  <input name="release_date" type="date">   </p>
+    <p>Duracion:  <input name="duration" type="text">   </p>
+    <p>Director:  
+        <select name= 'director'>
+        {% for director in directors  %}
+          <option value ={{director.id}} > {{director.first_name}} {{director.last_name}}  </option>         
+        {% endfor %}  
+        </select>   
+    </p>
+
+    <p>Elenco:
+        {% for actor in actors %}
+        <p> <label> <input type='checkbox' name='actor' value = {{actor.id}}> {{actor.name}} {{actor.lastname}}  </label>  </p>
+        {% endfor%}
+
+    </p>
+<button type='submit'>Registrar</button>
+</form>
+
+
+
+
 <h1>Listado de Peliculas</h1>
 
 
 <ul>
-{% for movie in movies %}
-
-<li>{{movie.title}}, Dirigido por: {{movie.director.first_name}}</li>
-
-{% endfor%}
+    {% for movie in movies %}
+        <li> <a href="{% url 'movie' movie_id=movie.id %}">{{movie.title}} </a> , Dirigido por: {{movie.director.first_name}}</li>
+    {% endfor%}
 </ul>
