@@ -1,3 +1,37 @@
-<h2>Bienvenido {{request.session.logged_username}}</h2>
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Bienvenido</h2>
 
 <a href = "/logout"> Cerrar Sesion</a>
+
+<form action = "task" method = "POST">
+    {% csrf_token %}
+    <p> Nombre: <input type="text" name="name" ></p>
+    <p> Fecha Limite: <input type="date" name = "due_date"> </p>
+<button type ="submit">Crear Tarea</button>
+
+</form>
+
+
+
+<h2> Mis Tareas </h2>
+
+<table>
+
+    <th>Nombre</th>
+    <th>Fecha Limite</th>
+    <th>Completado</th>
+    {% for task in user.tasks.all %}
+    <tr>
+        <td>{{ task.name}},</td>
+        <td>{{task.due_date}}</td>
+        <td>{{task.completed}}</td>
+    </tr>    
+    {% endfor %}
+</table>
+
+{% endblock %}
+

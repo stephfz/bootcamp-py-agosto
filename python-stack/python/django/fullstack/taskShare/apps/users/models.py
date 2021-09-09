@@ -1,4 +1,4 @@
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from django.db import models
 
 import re
@@ -39,6 +39,10 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now_add=True)
     objects = UserManager()
+    
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        super(User, self).save(*args, **kwargs)
 
     def authenticate(email, password):
         results = User.objects.filter(email = email)
@@ -49,4 +53,17 @@ class User(models.Model):
            if check_password(password, saved_password):
                print('user: ', user.name)
                return user
-           return None    
+           return None 
+
+    @staticmethod
+    def user_exists(email):
+        return User.objects.filter(email = email).exists()
+
+
+class Task(models.Model):
+    name = models.CharField(max_length=100)
+    due_date = models.DateField(blank = False)
+    completed = models.BooleanField(default = False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, related_name='tasks', on_delete=models.CASCADE)

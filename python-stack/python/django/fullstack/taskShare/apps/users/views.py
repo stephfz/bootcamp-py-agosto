@@ -1,5 +1,5 @@
 from django.core.checks import messages
-from .models import User, UserManager
+from .models import Task, User, UserManager
 from django.shortcuts import render, redirect
 from .forms.customForms import LoginForm
 
@@ -7,12 +7,15 @@ from .forms.customForms import LoginForm
 import bcrypt
 from django.contrib.auth.hashers import make_password
 
+from .forms.user import UserForm
+
 def index(request):
     return render(request, 'index.html')
 
 def register(request):
     if request.method == "GET":
-        return render(request, 'register.html')
+        registerForm = UserForm()
+        return render(request, 'register.html',  {'registerForm': registerForm})
     else: # "POST"  
         errors = User.objects.basic_validator(request.POST)
         if len(errors) > 0:
@@ -20,17 +23,12 @@ def register(request):
                 messages.error(request, value, key)
             return redirect('/register')    
         else:
-            name = request.POST['name']
-            last_name = request.POST['lastname']
-            email = request.POST['email']
-            password = request.POST['password']
-            encrypted_pwd = make_password(password)
-
-            new_user = User.objects.create(name = name, lastname = last_name, 
-                                email = email, password = encrypted_pwd)
-            print('Nuevo Usuario: ', new_user.name) 
-            request.session['logged_userid'] = new_user.id  
-            request.session['logged_username'] = new_user.name
+            registerForm = UserForm(request.POST)
+            if registerForm.is_valid():
+                new_user = registerForm.save()
+                print('Nuevo Usuario: ', new_user.name)            
+                request.session['logged_userid'] = new_user.id  
+                request.session['logged_username'] = new_user.name
             return redirect('/home')                 
 
 
@@ -48,7 +46,6 @@ def login(request):
                 request.session['logged_userid'] = user.id
                 request.session["logged_username"] = user.name
                 return redirect('/home')
-        #return render(request, 'login.html') 
         return redirect('/login')        
 
 
@@ -56,8 +53,9 @@ def login(request):
 def home(request):
     try:
         user = User.objects.get(id = int(request.session["logged_userid"]))
+        context = { 'user': user }
         if user:
-            return render(request, 'home.html')
+            return render(request, 'home.html', context)
         else:
             return redirect('/')    
     except:
@@ -70,5 +68,21 @@ def logout(request):
         del request.session['logged_userid']
     except:
         print('Error')
-    return redirect('/')        
+    return redirect('/') 
 
+def settings(request):
+    return render(request, 'settings.html')           
+
+
+def task(request):
+   if request.method == "POST":
+       #crear el task
+       # 1. obtener el objeto usuarios
+       user = User.objects.get(id = int(request.session["logged_userid"]))
+       task_name = request.POST['name']
+       task_duedate = request.POST['due_date'] 
+       #2. Creacion de Nueva Tasl
+       new_task = Task.objects.create(name = task_name, due_date= task_duedate ,
+                                    user= user )
+       print("Nueva Tarea: ", new_task)
+       return redirect('/home')                             
