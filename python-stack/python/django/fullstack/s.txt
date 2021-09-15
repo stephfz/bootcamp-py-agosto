@@ -1,0 +1,5 @@
+1. django-admin startporject <nombre_de_proyecto>
+2. crear una carpeta para mi apps 
+3. dentro la carpeta de app django-admin startapp myapp, myapp2....
+4. crear carpetas de recursos static templates , static/img, static/css, static/js
+5. myapp  urls.py
