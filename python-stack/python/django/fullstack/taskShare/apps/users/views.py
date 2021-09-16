@@ -1,5 +1,5 @@
 from django.core.checks import messages
-from .models import Task, User, UserManager
+from .models import User, UserManager
 from django.shortcuts import render, redirect
 from .forms.customForms import LoginForm
 
@@ -45,21 +45,12 @@ def login(request):
                 print("logged user: ", user)
                 request.session['logged_userid'] = user.id
                 request.session["logged_username"] = user.name
-                return redirect('/home')
+                return redirect('tasks/home')
         return redirect('/login')        
 
 
 
-def home(request):
-    try:
-        user = User.objects.get(id = int(request.session["logged_userid"]))
-        context = { 'user': user }
-        if user:
-            return render(request, 'home.html', context)
-        else:
-            return redirect('/')    
-    except:
-        return redirect('/')    
+   
 
 
 def logout(request):
@@ -74,15 +65,3 @@ def settings(request):
     return render(request, 'settings.html')           
 
 
-def task(request):
-   if request.method == "POST":
-       #crear el task
-       # 1. obtener el objeto usuarios
-       user = User.objects.get(id = int(request.session["logged_userid"]))
-       task_name = request.POST['name']
-       task_duedate = request.POST['due_date'] 
-       #2. Creacion de Nueva Tasl
-       new_task = Task.objects.create(name = task_name, due_date= task_duedate ,
-                                    user= user )
-       print("Nueva Tarea: ", new_task)
-       return redirect('/home')                             
